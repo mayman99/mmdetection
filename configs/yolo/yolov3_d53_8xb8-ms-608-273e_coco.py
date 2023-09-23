@@ -1,4 +1,4 @@
-_base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
+_base_ = ['../_base_/schedules/schedule_2x.py', '../_base_/default_runtime.py']
 # model settings
 data_preprocessor = dict(
     type='DetDataPreprocessor',
@@ -21,7 +21,7 @@ model = dict(
         out_channels=[512, 256, 128]),
     bbox_head=dict(
         type='YOLOV3Head',
-        num_classes=80,
+        num_classes=153,
         in_channels=[512, 256, 128],
         out_channels=[1024, 512, 256],
         anchor_generator=dict(
@@ -64,7 +64,7 @@ model = dict(
         max_per_img=100))
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = 'data/blenderproc_cubes/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -109,43 +109,45 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=8,
-    num_workers=4,
+    batch_size=2,
+    num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     batch_sampler=dict(type='AspectRatioBatchSampler'),
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/instances_train2017.json',
-        data_prefix=dict(img='train2017/'),
+        ann_file='dataset.json',
+        data_prefix=dict(img='images'),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
         backend_args=backend_args))
-val_dataloader = dict(
-    batch_size=1,
-    num_workers=2,
-    persistent_workers=True,
-    drop_last=False,
-    sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='annotations/instances_val2017.json',
-        data_prefix=dict(img='val2017/'),
-        test_mode=True,
-        pipeline=test_pipeline,
-        backend_args=backend_args))
-test_dataloader = val_dataloader
+val_dataloader = None
 
-val_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + 'annotations/instances_val2017.json',
-    metric='bbox',
-    backend_args=backend_args)
-test_evaluator = val_evaluator
+# val_dataloader = dict(
+#     batch_size=1,
+#     num_workers=2,
+#     persistent_workers=True,
+#     drop_last=False,
+#     sampler=dict(type='DefaultSampler', shuffle=False),
+#     dataset=dict(
+#         type=dataset_type,
+#         data_root=data_root,
+#         ann_file='dataset.json',
+#         data_prefix=dict(img='images'),
+#         test_mode=True,
+#         pipeline=test_pipeline,
+#         backend_args=backend_args))
+# test_dataloader = val_dataloader
 
-train_cfg = dict(max_epochs=273, val_interval=7)
+# val_evaluator = dict(
+#     type='CocoMetric',
+#     ann_file=data_root + 'annotations/instances_val2017.json',
+#     metric='bbox',
+#     backend_args=backend_args)
+# test_evaluator = val_evaluator
+
+# train_cfg = dict(max_epochs=273, val_interval=7)
 
 # optimizer
 optim_wrapper = dict(
@@ -159,9 +161,9 @@ param_scheduler = [
     dict(type='MultiStepLR', by_epoch=True, milestones=[218, 246], gamma=0.1)
 ]
 
-default_hooks = dict(checkpoint=dict(type='CheckpointHook', interval=7))
+default_hooks = dict(checkpoint=dict(type='CheckpointHook', interval=40))
 
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(base_batch_size=2)

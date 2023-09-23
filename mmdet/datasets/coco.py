@@ -16,19 +16,8 @@ class CocoDataset(BaseDetDataset):
 
     METAINFO = {
         'classes':
-        ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train',
-         'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign',
-         'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep',
-         'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella',
-         'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard',
-         'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard',
-         'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork',
-         'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange',
-         'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair',
-         'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv',
-         'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave',
-         'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
-         'scissors', 'teddy bear', 'hair drier', 'toothbrush'),
+        ('Void', 'Floor', 'Wall', 'Door', 'Ceiling', 'Decor', 'Lighting', 'Furniture', 'Construction', 'Miscellaneous', 'Plumbing', 'Storage', 'Customized', 'Cabinet0', 'Cabinet1', 'Cabinet2', 'Cabinet3', 'Table0', 'Table1', 'Table2', 'Table3', 'Sofa0', 'Sofa1', 'Sofa2', 'Sofa3', 'Electronics0', 'Electronics1', 'Electronics2', 'Electronics3', 'Chair0', 'Chair1', 'Chair2', 'Chair3', 'ArmChair0', 'ArmChair1', 'ArmChair2', 'ArmChair3', 'Bed0', 'Bed1', 'Bed2', 'Bed3', 'KidsBed0', 'KidsBed1', 'KidsBed2', 'KidsBed3', 'Stool0', 'Stool1', 'Stool2', 'Stool3', 'Platform0', 'Platform1', 'Platform2', 'Platform3', 'Sideboard0', 'Sideboard1', 'Sideboard2', 'Sideboard3', 'Bathroom0', 'Bathroom1', 'Bathroom2', 'Bathroom3', 'Window0', 'Window1', 'Window2', 'Window3', 'Appliance0', 'Appliance1', 'Appliance2', 'Appliance3', 'DiningTable0', 'DiningTable1', 'DiningTable2', 'DiningTable3', 'DeskCabinet0', 'DeskCabinet1', 'DeskCabinet2', 'DeskCabinet3', 'SingleBed0', 'SingleBed1', 'SingleBed2', 'SingleBed3', 'ClassicChair0', 'ClassicChair1', 'ClassicChair2', 'ClassicChair3',
+         'CornerSideTable0', 'CornerSideTable1', 'CornerSideTable2', 'CornerSideTable3', 'Shelf0', 'Shelf1', 'Shelf2', 'Shelf3', 'Nightstand0', 'Nightstand1', 'Nightstand2', 'Nightstand3', 'ComputerChair0', 'ComputerChair1', 'ComputerChair2', 'ComputerChair3', 'DressingTable0', 'DressingTable1', 'DressingTable2', 'DressingTable3', 'Desk0', 'Desk1', 'Desk2', 'Desk3', 'DressingChair0', 'DressingChair1', 'DressingChair2', 'DressingChair3', 'Wardrobe0', 'Wardrobe1', 'Wardrobe2', 'Wardrobe3', 'BunkBed0', 'BunkBed1', 'BunkBed2', 'BunkBed3', 'BookcaseCabinet0', 'BookcaseCabinet1', 'BookcaseCabinet2', 'BookcaseCabinet3', 'CafeChair0', 'CafeChair1', 'CafeChair2', 'CafeChair3', 'CoffeTable0', 'CoffeTable1', 'CoffeTable2', 'CoffeTable3', 'KingSizedBed0', 'KingSizedBed1', 'KingSizedBed2', 'KingSizedBed3', 'MultiSeatSofa0', 'MultiSeatSofa1', 'MultiSeatSofa2', 'MultiSeatSofa3', 'SideCabinet0', 'SideCabinet1', 'SideCabinet2', 'SideCabinet3', 'ShoeCabinet0', 'ShoeCabinet1', 'ShoeCabinet2', 'ShoeCabinet3', 'BedSofa0', 'BedSofa1', 'BedSofa2', 'BedSofa3'),
         # palette is a list of color tuples, which is used for visualization.
         'palette':
         [(220, 20, 60), (119, 11, 32), (0, 0, 142), (0, 0, 230), (106, 0, 228),
@@ -70,6 +59,7 @@ class CocoDataset(BaseDetDataset):
         self.cat_ids = self.coco.get_cat_ids(
             cat_names=self.metainfo['classes'])
         self.cat2label = {cat_id: i for i, cat_id in enumerate(self.cat_ids)}
+        # print(self.metainfo['classes'])
         self.cat_img_map = copy.deepcopy(self.coco.cat_img_map)
 
         img_ids = self.coco.get_img_ids()
@@ -110,7 +100,6 @@ class CocoDataset(BaseDetDataset):
         """
         img_info = raw_data_info['raw_img_info']
         ann_info = raw_data_info['raw_ann_info']
-
         data_info = {}
 
         # TODO: need to change data_prefix['img'] to data_prefix['img_path']
@@ -134,7 +123,6 @@ class CocoDataset(BaseDetDataset):
         instances = []
         for i, ann in enumerate(ann_info):
             instance = {}
-
             if ann.get('ignore', False):
                 continue
             x1, y1, w, h = ann['bbox']
