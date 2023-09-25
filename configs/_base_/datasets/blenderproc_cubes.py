@@ -21,7 +21,7 @@ train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='Resize', scale=(512, 512), keep_ratio=True),
-    # dict(type='RandomFlip', prob=0.5),
+    dict(type='RandomFlip', prob=0.5),
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
@@ -36,7 +36,7 @@ test_pipeline = [
 ]
 train_dataloader = dict(
     batch_size=4,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     batch_sampler=dict(type='AspectRatioBatchSampler'),
