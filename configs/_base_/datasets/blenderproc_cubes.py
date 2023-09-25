@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/blenderproc_cubes/'
+data_root = 'data/blenderproc_cubes_2/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -48,7 +48,7 @@ train_dataloader = dict(
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
         backend_args=backend_args))
-val_dataloader = None
+# val_dataloader = None
 # val_dataloader = dict(
 #     batch_size=1,
 #     num_workers=2,

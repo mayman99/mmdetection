@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/datasets/coco_detection.py', '../_base_/default_runtime.py'
+    '../_base_/datasets/blenderproc_cubes.py', '../_base_/default_runtime.py'
 ]
 model = dict(
     type='DeformableDETR',
@@ -57,7 +57,7 @@ model = dict(
     positional_encoding=dict(num_feats=128, normalize=True, offset=-0.5),
     bbox_head=dict(
         type='DeformableDETRHead',
-        num_classes=80,
+        num_classes=153,
         sync_cls_avg_factor=True,
         loss_cls=dict(
             type='FocalLoss',
@@ -134,11 +134,11 @@ optim_wrapper = dict(
         }))
 
 # learning policy
-max_epochs = 50
+max_epochs = 1000
 train_cfg = dict(
-    type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+    type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=500)
+# val_cfg = dict(type='ValLoop')
+# test_cfg = dict(type='TestLoop')
 
 param_scheduler = [
     dict(
@@ -153,4 +153,4 @@ param_scheduler = [
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (16 GPUs) x (2 samples per GPU)
-auto_scale_lr = dict(base_batch_size=32)
+auto_scale_lr = dict(base_batch_size=1)

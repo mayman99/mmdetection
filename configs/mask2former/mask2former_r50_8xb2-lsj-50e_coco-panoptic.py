@@ -1,7 +1,7 @@
 _base_ = [
-    '../_base_/datasets/coco_panoptic.py', '../_base_/default_runtime.py'
+    '../_base_/datasets/blenderproc_cubes.py', '../_base_/default_runtime.py'
 ]
-image_size = (1024, 1024)
+image_size = (512, 512)
 batch_augments = [
     dict(
         type='BatchFixedSizePad',
@@ -24,8 +24,8 @@ data_preprocessor = dict(
     seg_pad_value=255,
     batch_augments=batch_augments)
 
-num_things_classes = 80
-num_stuff_classes = 53
+num_things_classes = 53
+num_stuff_classes = 100
 num_classes = num_things_classes + num_stuff_classes
 model = dict(
     type='Mask2Former',
@@ -148,7 +148,7 @@ model = dict(
     init_cfg=None)
 
 # dataset settings
-data_root = 'data/coco/'
+data_root = 'data/blenderproc_cubes_sample_2/'
 train_pipeline = [
     dict(
         type='LoadImageFromFile',
@@ -232,8 +232,8 @@ train_cfg = dict(
     max_iters=max_iters,
     val_interval=interval,
     dynamic_intervals=dynamic_intervals)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+# val_cfg = dict(type='ValLoop')
+# test_cfg = dict(type='TestLoop')
 
 default_hooks = dict(
     checkpoint=dict(
@@ -248,4 +248,4 @@ log_processor = dict(type='LogProcessor', window_size=50, by_epoch=False)
 #   - `enable` means enable scaling LR automatically
 #       or not by default.
 #   - `base_batch_size` = (8 GPUs) x (2 samples per GPU).
-auto_scale_lr = dict(enable=False, base_batch_size=16)
+auto_scale_lr = dict(enable=False, base_batch_size=2)

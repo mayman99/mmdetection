@@ -15,7 +15,7 @@ model = dict(
             num_convs=4,
             in_channels=256,
             conv_out_channels=256,
-            num_classes=183,
+            num_classes=153,
             loss_seg=dict(
                 type='CrossEntropyLoss', ignore_index=255, loss_weight=0.2))))
 
@@ -29,5 +29,5 @@ train_pipeline = [
 ]
 train_dataloader = dict(
     dataset=dict(
-        data_prefix=dict(img='train2017/', seg='stuffthingmaps/train2017/'),
+        data_prefix=dict(img='blenderproc_cubes_sample_2/', seg='blenderproc_cubes_sample_2/'),
         pipeline=train_pipeline))

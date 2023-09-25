@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/datasets/coco_instance.py',
-    '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py'
+    '../_base_/datasets/blenderproc_cubes.py',
+    '../_base_/schedules/schedule_2x.py', '../_base_/default_runtime.py'
 ]
 # model settings
 model = dict(
@@ -59,7 +59,7 @@ model = dict(
                 in_channels=256,
                 fc_out_channels=1024,
                 roi_feat_size=7,
-                num_classes=80,
+                num_classes=153,
                 bbox_coder=dict(
                     type='DeltaXYWHBBoxCoder',
                     target_means=[0., 0., 0., 0.],
