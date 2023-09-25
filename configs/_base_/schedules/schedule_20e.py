@@ -1,13 +1,13 @@
 # training schedule for 20e
-max_epochs = 200
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=50)
+max_epochs = 30
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=15)
 # val_cfg = dict(type='ValLoop')
 # test_cfg = dict(type='TestLoop')
 
 # learning rate
 param_scheduler = [
     dict(
-        type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
+        type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=max_epochs),
     dict(
         type='MultiStepLR',
         begin=0,
