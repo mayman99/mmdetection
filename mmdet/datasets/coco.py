@@ -44,7 +44,6 @@ class CocoDataset(BaseDetDataset):
         self.cat_ids = self.coco.get_cat_ids(
             cat_names=self.metainfo['classes'])
         self.cat2label = {cat_id: i for i, cat_id in enumerate(self.cat_ids)}
-        print(self.metainfo['classes'])
         self.cat_img_map = copy.deepcopy(self.coco.cat_img_map)
 
         img_ids = self.coco.get_img_ids()
