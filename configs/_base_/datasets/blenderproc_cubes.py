@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/blenderproc_cubes_2/'
+data_root = 'data/cubes_bedrooms_colorcode_152_2/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
