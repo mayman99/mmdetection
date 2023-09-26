@@ -65,13 +65,13 @@ val_dataloader = dict(
         backend_args=backend_args))
 test_dataloader = val_dataloader
 
-# val_evaluator = dict(
-#     type='CocoMetric',
-#     ann_file=data_root + 'dataset.json',
-#     metric='bbox',
-#     format_only=False,
-#     backend_args=backend_args)
-# test_evaluator = val_evaluator
+val_evaluator = dict(
+    type='CocoMetric',
+    ann_file=data_root + '/val/dataset.json',
+    metric='bbox',
+    format_only=False,
+    backend_args=backend_args)
+test_evaluator = val_evaluator
 
 # inference on test dataset and
 # format the output results for submission.
