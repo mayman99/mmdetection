@@ -2,8 +2,8 @@ _base_ = [
     '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py',
     './yolox_tta.py'
 ]
-
-img_scale = (640, 640)  # width, height
+batch_size = 4
+img_scale = (512, 512)  # width, height
 
 # model settings
 model = dict(
@@ -14,7 +14,7 @@ model = dict(
         batch_augments=[
             dict(
                 type='BatchSyncRandomResize',
-                random_size_range=(480, 800),
+                random_size_range=(512, 512),
                 size_divisor=32,
                 interval=10)
         ]),
@@ -39,7 +39,7 @@ model = dict(
         act_cfg=dict(type='Swish')),
     bbox_head=dict(
         type='YOLOXHead',
-        num_classes=80,
+        num_classes=153,
         in_channels=128,
         feat_channels=128,
         stacked_convs=2,
@@ -70,7 +70,7 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/coco/'
+data_root = 'data/cubes_bedrooms_colorcode_152_2/'
 dataset_type = 'CocoDataset'
 
 # Example to use different file client
@@ -101,7 +101,7 @@ train_pipeline = [
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
     dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomFlip', prob=0.5),
+    dict(type='RandomFlip', prob=0.1),
     # According to the official implementation, multi-scale
     # training is not considered here but in the
     # 'mmdet/models/detectors/yolox.py'.
@@ -124,8 +124,8 @@ train_dataset = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/instances_train2017.json',
-        data_prefix=dict(img='train2017/'),
+        ann_file='train/dataset.json',
+        data_prefix=dict(img='train/images'),
         pipeline=[
             dict(type='LoadImageFromFile', backend_args=backend_args),
             dict(type='LoadAnnotations', with_bbox=True)
@@ -149,13 +149,13 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=8,
+    batch_size=batch_size,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=train_dataset)
 val_dataloader = dict(
-    batch_size=8,
+    batch_size=batch_size,
     num_workers=4,
     persistent_workers=True,
     drop_last=False,
@@ -163,8 +163,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/instances_val2017.json',
-        data_prefix=dict(img='val2017/'),
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -172,7 +172,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'annotations/instances_val2017.json',
+    ann_file=data_root + '/val/dataset.json',
     metric='bbox',
     backend_args=backend_args)
 test_evaluator = val_evaluator
@@ -247,4 +247,4 @@ custom_hooks = [
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(base_batch_size=4)

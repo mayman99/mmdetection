@@ -49,21 +49,21 @@ train_dataloader = dict(
         pipeline=train_pipeline,
         backend_args=backend_args))
 # val_dataloader = None
-# val_dataloader = dict(
-#     batch_size=1,
-#     num_workers=2,
-#     persistent_workers=True,
-#     drop_last=False,
-#     sampler=dict(type='DefaultSampler', shuffle=False),
-#     dataset=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         ann_file='dataset.json',
-#         data_prefix=dict(img='images'),
-#         test_mode=True,
-#         pipeline=test_pipeline,
-#         backend_args=backend_args))
-# test_dataloader = val_dataloader
+val_dataloader = dict(
+    batch_size=1,
+    num_workers=2,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='dataset.json',
+        data_prefix=dict(img='images'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
+test_dataloader = val_dataloader
 
 # val_evaluator = dict(
 #     type='CocoMetric',

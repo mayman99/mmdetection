@@ -1,7 +1,7 @@
 _base_ = './htc_r50_fpn_1x_coco.py'
 
 # learning policy
-max_epochs = 20
+max_epochs = 2000
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
