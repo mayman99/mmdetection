@@ -49,29 +49,29 @@ train_dataloader = dict(
         pipeline=train_pipeline,
         backend_args=backend_args))
 # val_dataloader = None
-# val_dataloader = dict(
-#     batch_size=batch_size_,
-#     num_workers=4,
-#     persistent_workers=True,
-#     drop_last=False,
-#     sampler=dict(type='DefaultSampler', shuffle=False),
-#     dataset=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         ann_file='val/dataset.json',
-#         data_prefix=dict(img='val/images'),
-#         test_mode=True,
-#         pipeline=test_pipeline,
-#         backend_args=backend_args))
-# test_dataloader = val_dataloader
+val_dataloader = dict(
+    batch_size=batch_size_,
+    num_workers=4,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
+test_dataloader = val_dataloader
 
-# val_evaluator = dict(
-#     type='CocoMetric',
-#     ann_file=data_root + '/val/dataset.json',
-#     metric='bbox',
-#     format_only=False,
-#     backend_args=backend_args)
-# test_evaluator = val_evaluator
+val_evaluator = dict(
+    type='CocoMetric',
+    ann_file=data_root + '/val/dataset.json',
+    metric='bbox',
+    format_only=False,
+    backend_args=backend_args)
+test_evaluator = val_evaluator
 
 # inference on test dataset and
 # format the output results for submission.
