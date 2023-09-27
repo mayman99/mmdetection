@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/cubes_bedrooms_colorcode_152_2/'
+data_root = 'data/blenderproc_cubes_sample_2/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -49,21 +49,21 @@ train_dataloader = dict(
         pipeline=train_pipeline,
         backend_args=backend_args))
 # val_dataloader = None
-# val_dataloader = dict(
-#     batch_size=batch_size_,
-#     num_workers=4,
-#     persistent_workers=True,
-#     drop_last=False,
-#     sampler=dict(type='DefaultSampler', shuffle=False),
-#     dataset=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         ann_file='val/dataset.json',
-#         data_prefix=dict(img='val/images'),
-#         test_mode=True,
-#         pipeline=test_pipeline,
-#         backend_args=backend_args))
-# test_dataloader = val_dataloader
+val_dataloader = dict(
+    batch_size=batch_size_,
+    num_workers=4,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
+test_dataloader = val_dataloader
 
 # val_evaluator = dict(
 #     type='CocoMetric',

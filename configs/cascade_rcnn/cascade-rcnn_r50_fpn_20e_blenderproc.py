@@ -1,20 +1,26 @@
+_base_ = [
+    '../_base_/models/cascade-rcnn_r50_fpn.py',
+    '../_base_/datasets/blenderproc_cubes.py', '../_base_/default_runtime.py'
+]
+
 # training schedule for 20e
-max_epochs = 500
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=500)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+max_epochs = 200
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=50)
+# val_cfg = dict(type='ValLoop')
+# test_cfg = dict(type='TestLoop')
 
 # learning rate
 param_scheduler = [
     dict(
         type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
     dict(
-        type='MultiStepLR',
-        begin=0,
-        end=max_epochs,
+        type='CosineAnnealingLR',
+        eta_min=0.0,
+        begin=1,
+        T_max=299,
+        end=300,
         by_epoch=True,
-        milestones=[16, 19],
-        gamma=0.1)
+        convert_to_iter_based=True)
 ]
 
 # optimizer

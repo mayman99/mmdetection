@@ -2,7 +2,7 @@ _base_ = [
     '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py',
     './yolox_tta.py'
 ]
-batch_size = 4
+batch_size = 1
 img_scale = (512, 512)  # width, height
 
 # model settings
@@ -70,7 +70,7 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/cubes_bedrooms_colorcode_152_2/'
+data_root = 'data/blenderproc_cubes_sample_2/'
 dataset_type = 'CocoDataset'
 
 # Example to use different file client
@@ -178,9 +178,9 @@ val_evaluator = dict(
 test_evaluator = val_evaluator
 
 # training settings
-max_epochs = 300
+max_epochs = 500
 num_last_epochs = 15
-interval = 10
+interval = 100
 
 train_cfg = dict(max_epochs=max_epochs, val_interval=interval)
 
@@ -247,4 +247,4 @@ custom_hooks = [
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
-auto_scale_lr = dict(base_batch_size=4)
+auto_scale_lr = dict(base_batch_size=batch_size)

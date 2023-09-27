@@ -1,7 +1,8 @@
 # training schedule for 2x
+max_epochs = 500
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=2000, val_interval=500)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+# val_cfg = dict(type='ValLoop')
+# test_cfg = dict(type='TestLoop')
 
 # learning rate
 param_scheduler = [
