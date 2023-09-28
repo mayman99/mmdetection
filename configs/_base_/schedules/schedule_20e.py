@@ -1,8 +1,8 @@
+# training schedule for 20e
 max_epochs = 400
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=5)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
-# evaluation = dict(interval=1, metric='mAP')
 
 # learning rate
 param_scheduler = [
@@ -26,10 +26,10 @@ optim_wrapper = dict(  # Configuration for the optimizer wrapper
     type='AmpOptimWrapper',  # Type of optimizer wrapper, you can switch to AmpOptimWrapper to enable mixed precision training
     optimizer=dict(  # Optimizer configuration, supports various PyTorch optimizers, please refer to https://pytorch.org/docs/stable/optim.html#algorithms
         type='SGD',  # SGD
-        lr=0.0005,  # Base learning rate
+        lr=0.005,  # Base learning rate
         momentum=0.9,  # SGD with momentum
         weight_decay=0.0001),  # Weight decay
-    clip_grad=dict(max_norm=35, norm_type=2),  # Configuration for gradient clipping, set to None to disable. For usage, please see https://mmengine.readthedocs.io/en/latest/tutorials/optimizer.html
+    clip_grad=dict(max_norm=2, norm_type=2),  # Configuration for gradient clipping, set to None to disable. For usage, please see https://mmengine.readthedocs.io/en/latest/tutorials/optimizer.html
     )
 
 # Default setting for scaling LR automatically
