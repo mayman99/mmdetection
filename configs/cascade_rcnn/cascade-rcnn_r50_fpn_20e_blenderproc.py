@@ -4,31 +4,37 @@ _base_ = [
 ]
 
 # training schedule for 20e
-max_epochs = 200
+max_epochs = 500
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=50)
-val_cfg = dict(type='ValLoop')
-test_cfg = dict(type='TestLoop')
+# val_cfg = dict(type='ValLoop')
+# test_cfg = dict(type='TestLoop')
 
 # learning rate
 param_scheduler = [
     dict(
-        type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
+        type='LinearLR',  # Use linear learning rate warmup
+        start_factor=0.001, # Coefficient for learning rate warmup
+        by_epoch=False,  # Update the learning rate during warmup at each iteration
+        begin=0,  # Starting from the first iteration
+        end=2000),  # End at the 500th iteration
     dict(
-        type='CosineAnnealingLR',
-        eta_min=0.0,
-        begin=1,
-        T_max=299,
-        end=300,
-        by_epoch=True,
-        convert_to_iter_based=True)
+        type='MultiStepLR',  # Use multi-step learning rate strategy during training
+        by_epoch=True,  # Update the learning rate at each epoch
+        begin=0,   # Starting from the first epoch
+        end=12,  # Ending at the 12th epoch
+        milestones=[8, 11],  # Learning rate decay at which epochs
+        gamma=0.1)  # Learning rate decay coefficient
 ]
 
 # optimizer
-optim_wrapper = dict(
-    type='OptimWrapper',
-    # optimizer=dict(type='SGD', lr=0.02, momentum=0.9, weight_decay=0.0001)
-    optimizer=dict(type='Adam', lr=0.003, weight_decay=0.0001),
-    clip_grad=dict(max_norm=35, norm_type=2)
+optim_wrapper = dict(  # Configuration for the optimizer wrapper
+    type='AmpOptimWrapper',  # Type of optimizer wrapper, you can switch to AmpOptimWrapper to enable mixed precision training
+    optimizer=dict(  # Optimizer configuration, supports various PyTorch optimizers, please refer to https://pytorch.org/docs/stable/optim.html#algorithms
+        type='SGD',  # SGD
+        lr=0.005,  # Base learning rate
+        momentum=0.9,  # SGD with momentum
+        weight_decay=0.0001),  # Weight decay
+    clip_grad=None,  # Configuration for gradient clipping, set to None to disable. For usage, please see https://mmengine.readthedocs.io/en/latest/tutorials/optimizer.html
     )
 
 # Default setting for scaling LR automatically
