@@ -34,7 +34,7 @@ optim_wrapper = dict(  # Configuration for the optimizer wrapper
         lr=0.005,  # Base learning rate
         momentum=0.9,  # SGD with momentum
         weight_decay=0.0001),  # Weight decay
-    clip_grad=None,  # Configuration for gradient clipping, set to None to disable. For usage, please see https://mmengine.readthedocs.io/en/latest/tutorials/optimizer.html
+    clip_grad=dict(max_norm=35, norm_type=2),  # Configuration for gradient clipping, set to None to disable. For usage, please see https://mmengine.readthedocs.io/en/latest/tutorials/optimizer.html
     )
 
 # Default setting for scaling LR automatically
