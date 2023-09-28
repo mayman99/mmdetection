@@ -1,5 +1,5 @@
 # training schedule for 20e
-max_epochs = 200
+max_epochs = 400
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=5)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
