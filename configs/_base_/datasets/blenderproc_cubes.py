@@ -66,11 +66,18 @@ val_dataloader = dict(
 test_dataloader = val_dataloader
 
 val_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + '/val/dataset.json',
+    # TODO: support WiderFace-Evaluation for easy, medium, hard cases
+    type='VOCMetric',
     metric='mAP',
-    format_only=False,
-    backend_args=backend_args)
+    eval_mode='11points')
+
+# val_evaluator = dict(
+#     type='CocoMetric',
+#     ann_file=data_root + '/val/dataset.json',
+#     metric='bbox',
+#     format_only=False,
+#     backend_args=backend_args)
+
 test_evaluator = val_evaluator
 
 # inference on test dataset and

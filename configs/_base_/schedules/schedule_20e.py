@@ -2,7 +2,7 @@ max_epochs = 400
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=5)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
-evaluation = dict(interval=1, metric='mAP')
+# evaluation = dict(interval=1, metric='mAP')
 
 # learning rate
 param_scheduler = [
