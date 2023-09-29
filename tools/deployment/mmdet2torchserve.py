@@ -52,6 +52,7 @@ def mmdet2torchserve(
 
         args = Namespace(
             **{
+                'config_file': f'{config_file}',
                 'model_file': f'{tmpdir}/config.py',
                 'serialized_file': checkpoint_file,
                 'handler': f'{Path(__file__).parent}/mmdet_handler.py',
