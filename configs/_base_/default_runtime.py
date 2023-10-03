@@ -7,7 +7,7 @@ default_hooks = dict(
     # checkpoint=dict(type='CheckpointHook', interval=1),
     checkpoint=dict(
         type='CheckpointHook',
-        interval=5,
+        interval=50,
         max_keep_ckpts=2
     ),
     sampler_seed=dict(type='DistSamplerSeedHook'),

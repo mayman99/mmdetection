@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/cubes_bedrooms_colorcode_152_2/'
+data_root = 'data/detection_random_single_cube_random_rot_rot_x4/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -16,7 +16,7 @@ data_root = 'data/cubes_bedrooms_colorcode_152_2/'
 #         'data/': 's3://openmmlab/datasets/detection/'
 #     }))
 backend_args = None
-batch_size_ = 4
+batch_size_ = 1
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
@@ -34,6 +34,7 @@ test_pipeline = [
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
+
 train_dataloader = dict(
     batch_size=batch_size_,
     num_workers=batch_size_,
@@ -51,29 +52,29 @@ train_dataloader = dict(
 # val_dataloader = None
 val_dataloader = dict(
     batch_size=batch_size_,
-    num_workers=4,
+    num_workers=batch_size_,
     persistent_workers=True,
     drop_last=False,
-    sampler=dict(type='DefaultSampler', shuffle=False),
+    sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='val/dataset.json',
-        data_prefix=dict(img='val/images'),
+        ann_file='train/dataset.json',
+        data_prefix=dict(img='train/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
 test_dataloader = val_dataloader
 
 val_evaluator = dict(
-    # TODO: support WiderFace-Evaluation for easy, medium, hard cases
     type='VOCMetric',
+    iou_thrs=0.3,
     metric='mAP',
     eval_mode='11points')
 
 # val_evaluator = dict(
 #     type='CocoMetric',
-#     ann_file=data_root + '/val/dataset.json',
+#     ann_file=data_root + '/train/dataset.json',
 #     metric='bbox',
 #     format_only=False,
 #     backend_args=backend_args)
@@ -91,13 +92,13 @@ test_evaluator = val_evaluator
 #     dataset=dict(
 #         type=dataset_type,
 #         data_root=data_root,
-#         ann_file=data_root + 'annotations/image_info_test-dev2017.json',
-#         data_prefix=dict(img='test2017/'),
+#         ann_file=data_root + 'test/dataset.json',
+#         data_prefix=dict(img='test/images/'),
 #         test_mode=True,
 #         pipeline=test_pipeline))
 # test_evaluator = dict(
 #     type='CocoMetric',
 #     metric='bbox',
 #     format_only=True,
-#     ann_file=data_root + 'annotations/image_info_test-dev2017.json',
+#     ann_file=data_root + 'test/dataset.json',
 #     outfile_prefix='./work_dirs/coco_detection/test')
