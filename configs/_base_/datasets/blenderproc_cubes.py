@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/detection_random_single_cube_random_rot_rot_x4/'
+data_root = 'data/detection_random_single_cube_random_rot_x4_v2/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -68,7 +68,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='VOCMetric',
-    iou_thrs=0.3,
+    iou_thrs=0.1,
     metric='mAP',
     eval_mode='11points')
 

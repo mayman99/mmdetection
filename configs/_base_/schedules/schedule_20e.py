@@ -25,7 +25,8 @@ param_scheduler = [
 optim_wrapper = dict(
     type='OptimWrapper',
     # optimizer=dict(type='SGD', lr=0.005, momentum=0.9, weight_decay=0.0001)
-    optimizer=dict(type='Adam', lr=0.0005, weight_decay=0.0001)
+    optimizer=dict(type='Adam', lr=0.0003, weight_decay=0.0001)
+    # optimizer=dict(type='Adam', lr=0.0005, weight_decay=0.0001) worked for 27 images after epoch 60, warmup of 2000 its
     )
 
 # Default setting for scaling LR automatically
@@ -33,4 +34,3 @@ optim_wrapper = dict(
 #       or not by default.
 #   - `base_batch_size` = (8 GPUs) x (2 samples per GPU).
 auto_scale_lr = dict(enable=False, base_batch_size=16)
-
