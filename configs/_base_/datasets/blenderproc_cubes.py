@@ -64,11 +64,25 @@ val_dataloader = dict(
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
-test_dataloader = val_dataloader
+
+test_dataloader = dict(
+    batch_size=batch_size_,
+    num_workers=batch_size_,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=True),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
 
 val_evaluator = dict(
     type='VOCMetric',
-    iou_thrs=0.1,
+    iou_thrs=0.5,
     metric='mAP',
     eval_mode='11points')
 

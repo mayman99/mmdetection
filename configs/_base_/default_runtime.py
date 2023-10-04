@@ -8,7 +8,8 @@ default_hooks = dict(
     checkpoint=dict(
         type='CheckpointHook',
         interval=50,
-        max_keep_ckpts=2
+        max_keep_ckpts=2,
+        save_best='auto'
     ),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     visualization=dict(type='DetVisualizationHook'))
