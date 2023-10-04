@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/detection_random_single_cube_random_rot_x4_v2/'
+data_root = 'data/merged_random_cubes/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -16,7 +16,7 @@ data_root = 'data/detection_random_single_cube_random_rot_x4_v2/'
 #         'data/': 's3://openmmlab/datasets/detection/'
 #     }))
 backend_args = None
-batch_size_ = 1
+batch_size_ = 4
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
