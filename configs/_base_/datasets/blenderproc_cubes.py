@@ -16,7 +16,7 @@ data_root = 'data/merged_random_cubes/'
 #         'data/': 's3://openmmlab/datasets/detection/'
 #     }))
 backend_args = None
-batch_size_ = 4
+batch_size_ = 1
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
@@ -59,8 +59,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='train/dataset.json',
-        data_prefix=dict(img='train/images'),
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -86,6 +86,12 @@ val_evaluator = dict(
     metric='mAP',
     eval_mode='11points')
 
+test_evaluator = dict(
+    type='VOCMetric',
+    iou_thrs=0.5,
+    metric='mAP',
+    eval_mode='11points')
+
 # val_evaluator = dict(
 #     type='CocoMetric',
 #     ann_file=data_root + '/train/dataset.json',
@@ -93,7 +99,7 @@ val_evaluator = dict(
 #     format_only=False,
 #     backend_args=backend_args)
 
-test_evaluator = val_evaluator
+# test_evaluator = val_evaluator
 
 # inference on test dataset and
 # format the output results for submission.
