@@ -1,5 +1,5 @@
 # training schedule for 20e
-max_epochs = 800
+max_epochs = 100
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
@@ -11,7 +11,7 @@ param_scheduler = [
         start_factor=0.001, # Coefficient for learning rate warmup
         by_epoch=False,  # Update the learning rate during warmup at each iteration
         begin=0,  # Starting from the first iteration
-        end=2000),  # End at the 500th iteration -> the bigger the less likely to go to nan
+        end=1000),  # End at the 500th iteration -> the bigger the less likely to go to nan
     dict(
         type='MultiStepLR',  # Use multi-step learning rate strategy during training
         by_epoch=True,  # Update the learning rate at each epoch

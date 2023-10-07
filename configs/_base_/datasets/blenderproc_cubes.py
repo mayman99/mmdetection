@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/merged_random_cubes/'
+data_root = 'data/merged_random_cubes_x8_302/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -16,7 +16,7 @@ data_root = 'data/merged_random_cubes/'
 #         'data/': 's3://openmmlab/datasets/detection/'
 #     }))
 backend_args = None
-batch_size_ = 4
+batch_size_ = 1
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
@@ -80,24 +80,25 @@ test_dataloader = dict(
         pipeline=test_pipeline,
         backend_args=backend_args))
 
+# val_evaluator = dict(
+#     type='VOCMetric',
+#     iou_thrs=0.5,
+#     metric='mAP',
+#     eval_mode='11points')
+
+
 val_evaluator = dict(
-    type='VOCMetric',
-    iou_thrs=0.5,
-    metric='mAP',
-    eval_mode='11points')
+    type='CocoMetric',
+    ann_file=data_root + '/val/dataset.json',
+    metric='bbox',
+    format_only=False,
+    backend_args=backend_args)
 
 test_evaluator = dict(
     type='VOCMetric',
     iou_thrs=0.5,
     metric='mAP',
     eval_mode='11points')
-
-# val_evaluator = dict(
-#     type='CocoMetric',
-#     ann_file=data_root + '/train/dataset.json',
-#     metric='bbox',
-#     format_only=False,
-#     backend_args=backend_args)
 
 # test_evaluator = val_evaluator
 
