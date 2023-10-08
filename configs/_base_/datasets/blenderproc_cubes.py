@@ -59,8 +59,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='val/dataset.json',
-        data_prefix=dict(img='val/images'),
+        ann_file='train/dataset.json',
+        data_prefix=dict(img='train/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
