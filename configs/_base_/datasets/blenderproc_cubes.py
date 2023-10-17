@@ -80,27 +80,27 @@ test_dataloader = dict(
         pipeline=test_pipeline,
         backend_args=backend_args))
 
-# val_evaluator = dict(
-#     type='VOCMetric',
-#     iou_thrs=0.5,
-#     metric='mAP',
-#     eval_mode='11points')
-
-
 val_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + '/val/dataset.json',
-    metric='bbox',
-    format_only=False,
-    backend_args=backend_args)
-
-test_evaluator = dict(
     type='VOCMetric',
     iou_thrs=0.5,
     metric='mAP',
     eval_mode='11points')
 
-# test_evaluator = val_evaluator
+
+# val_evaluator = dict(
+#     type='CocoMetric',
+#     ann_file=data_root + '/val/dataset.json',
+#     metric='bbox',
+#     format_only=False,
+#     backend_args=backend_args)
+
+# test_evaluator = dict(
+#     type='VOCMetric',
+#     iou_thrs=0.5,
+#     metric='mAP',
+#     eval_mode='11points')
+
+test_evaluator = val_evaluator
 
 # inference on test dataset and
 # format the output results for submission.
