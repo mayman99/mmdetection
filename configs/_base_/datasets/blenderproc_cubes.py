@@ -16,7 +16,7 @@ data_root = 'data/merged_random_cubes_x8_302/'
 #         'data/': 's3://openmmlab/datasets/detection/'
 #     }))
 backend_args = None
-batch_size_ = 8
+batch_size_ = 4
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
