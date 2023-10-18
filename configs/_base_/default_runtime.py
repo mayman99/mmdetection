@@ -7,7 +7,7 @@ default_hooks = dict(
     # checkpoint=dict(type='CheckpointHook', interval=1),
     checkpoint=dict(
         type='CheckpointHook',
-        interval=2,
+        interval=4,
         max_keep_ckpts=2,
         save_best='auto'
     ),
