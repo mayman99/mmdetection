@@ -164,8 +164,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='train/dataset.json',
-        data_prefix=dict(img='train/images'),
+        ann_file='val/dataset.json',
+        data_prefix=dict(img='val/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -173,7 +173,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + '/train/dataset.json',
+    ann_file=data_root + '/val/dataset.json',
     metric='bbox',
     backend_args=backend_args)
 test_evaluator = val_evaluator
