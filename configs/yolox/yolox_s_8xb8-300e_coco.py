@@ -3,7 +3,12 @@ _base_ = [
     './yolox_tta.py'
 ]
 batch_size = 1
-img_scale = (512, 512)  # width, height
+
+# dataset settings
+data_root = 'data/merged_random_cubes_x8_302_mini_4/'
+dataset_type = 'CocoDataset'
+num_classes = 302
+img_scale = (640, 640)  # width, height
 
 # model settings
 model = dict(
@@ -39,7 +44,7 @@ model = dict(
         act_cfg=dict(type='Swish')),
     bbox_head=dict(
         type='YOLOXHead',
-        num_classes=153,
+        num_classes=num_classes,
         in_channels=128,
         feat_channels=128,
         stacked_convs=2,
@@ -68,10 +73,6 @@ model = dict(
     # In order to align the source code, the threshold of the val phase is
     # 0.01, and the threshold of the test phase is 0.001.
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
-
-# dataset settings
-data_root = 'data/blenderproc_cubes_sample_2/'
-dataset_type = 'CocoDataset'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
