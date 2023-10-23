@@ -8,7 +8,7 @@ batch_size = 1
 data_root = 'data/merged_random_cubes_x8_302_mini_4/'
 dataset_type = 'CocoDataset'
 num_classes = 302
-img_scale = (512, 512)  # width, height
+img_scale = (640, 640)  # width, height
 
 # model settings
 model = dict(
@@ -19,7 +19,7 @@ model = dict(
         batch_augments=[
             dict(
                 type='BatchSyncRandomResize',
-                random_size_range=(512, 512),
+                random_size_range=img_scale,
                 size_divisor=32,
                 interval=10)
         ]),
@@ -164,8 +164,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='val/dataset.json',
-        data_prefix=dict(img='val/images'),
+        ann_file='train/dataset.json',
+        data_prefix=dict(img='train/images'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -173,7 +173,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + '/val/dataset.json',
+    ann_file=data_root + '/train/dataset.json',
     metric='bbox',
     backend_args=backend_args)
 test_evaluator = val_evaluator
