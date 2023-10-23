@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py',
+    '../_base_/schedules/schedule_20e.py', '../_base_/default_runtime.py',
     './yolox_tta.py'
 ]
 batch_size = 1
