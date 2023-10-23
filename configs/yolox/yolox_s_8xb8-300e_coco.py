@@ -8,7 +8,7 @@ batch_size = 1
 data_root = 'data/merged_random_cubes_x8_302_mini_4/'
 dataset_type = 'CocoDataset'
 num_classes = 302
-img_scale = (512, 512)  # width, height
+img_scale = (640, 640)  # width, height
 
 # model settings
 model = dict(
